@@ -14,6 +14,9 @@ class PlayScene extends Phaser.Scene {
 
   create () {
     this.add.image(400, 300, 'sky');
+    this.hits = 0;
+    this.text = this.add.text(10, 10, 'Hits: 0',  {fontSize: '22px', fill: '#fff'})
+      .setDepth(1);
     this.speed = 500;
     this.player = this.physics.add.sprite(0, 0, 'player')
       .setOrigin(0)
@@ -42,6 +45,8 @@ class PlayScene extends Phaser.Scene {
     })
 
     this.physics.add.collider(this.player, bombs, () => {
+      this.hits++;
+      this.text.setText(`Hits: ${this.hits}`);
       this.player
         .setX(400)
         .setY(300);
