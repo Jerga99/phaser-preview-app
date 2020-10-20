@@ -15,13 +15,15 @@ class PlayScene extends Phaser.Scene {
   create () {
     this.add.image(400, 300, 'sky');
     this.speed = 500;
-    this.player = this.physics.add.sprite(0, 0, 'player').setOrigin(0);
-    this.player.setCollideWorldBounds(true);
+    this.player = this.physics.add.sprite(0, 0, 'player')
+      .setOrigin(0)
+      .setCollideWorldBounds(true);
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     const bombs = this.physics.add.group();
     bombs.createMultiple({
       classType: Phaser.Physics.Arcade.Sprite,
-      quantity: 5,
+      quantity: 15,
       key: 'bomb',
       active: true,
       setXY: {
@@ -31,14 +33,19 @@ class PlayScene extends Phaser.Scene {
       }
     });
 
-    bombs.getChildren().forEach(b => {
-      b.setCollideWorldBounds(true)
-      b.body.setBounce(1);
-      b.body.setVelocityX(Phaser.Math.Between(-500, 500));
-      b.body.setVelocityY(Phaser.Math.Between(-500, 500));
+    bombs.getChildren().forEach(bomb => {
+      bomb.body.setBounce(1)
+        .setVelocityX(Phaser.Math.Between(-500, 500))
+        .setVelocityY(Phaser.Math.Between(-500, 500))
+        .setImmovable(true)
+        .setCollideWorldBounds(true)
     })
 
-    this.cursors = this.input.keyboard.createCursorKeys();
+    this.physics.add.collider(this.player, bombs, () => {
+      this.player
+        .setX(400)
+        .setY(300);
+    }, null, this)
   }
 
   update() {
