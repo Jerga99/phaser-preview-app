@@ -3,15 +3,18 @@ import Phaser from "phaser";
 import PlayScene from './scenes/Play';
 import PreloadScene from './scenes/Preload';
 
+const WIDTH = document.body.offsetWidth;
+const HEIGHT = document.body.offsetHeight;
+
 const config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: WIDTH,
+  height: HEIGHT,
   physics: {
     default: 'arcade',
     arcade: {
       gravity: { y: 0 },
-      debug: true
+      // debug: true
     }
   },
   scene: [ PreloadScene, PlayScene ]
