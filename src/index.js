@@ -17,4 +17,11 @@ const config = {
   scene: [ PreloadScene, PlayScene ]
 };
 
-new Phaser.Game(config);
+// We need to wait until FB Instant Games SDK is loaded
+if (process.env.FB_ENV || process.env.NODE_ENV === 'production') {
+  FBInstant.initializeAsync().then(function() {
+    new Phaser.Game(config);
+  })
+} else {
+  new Phaser.Game(config);
+}
