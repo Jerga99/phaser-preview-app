@@ -6,12 +6,6 @@ class PlayScene extends Phaser.Scene {
     super('PlayScene');
   }
 
-  preload () {
-    this.load.image('sky', 'assets/sky.png');
-    this.load.image('player', 'assets/player.png');
-    this.load.image('bomb', 'assets/bomb.png');
-  }
-
   create () {
     this.add.image(400, 300, 'sky');
     this.hits = 0;
